@@ -51,7 +51,7 @@ public class VueDemoServiceImpl implements VueDemoService {
     @Override
     public Map<String, Object> getInfoByID(Persons person) {
         Map<String, Object> map = new HashMap<>();
-        String sql = "select id,name,address,sex from persons where id =" + person.getId();
+        String sql = "select id,name,address,sex,date_format(create_datetime, '%Y-%m-%d %H:%i:%s') as date from persons where id =" + person.getId();
         map = vueDemoDao.getInfoByID(sql);
         return map;
     }
@@ -86,11 +86,10 @@ public class VueDemoServiceImpl implements VueDemoService {
 
     @Override
     public List<Map<String, Object>> getInfoByPage(String  searchWord,int pageNum,int pageSize){
-        String sql = "select id,name,address,sex from persons ";
+        String sql = "select id,name,address,sex,date_format(create_datetime, '%Y-%m-%d %H:%i:%s') as date from persons ";
         sql = sql + CommonUtils.makeSelectWhereSql(searchWord,"name","address") + " order by create_datetime desc limit "+(pageNum-1)*pageSize +","+pageSize;
 
         return vueDemoDao.getInfoByPage(sql);
     }
-
 
 }

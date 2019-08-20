@@ -104,9 +104,9 @@ public class VueDemoController {
     }
 
     @RequestMapping(value = "/persons/getInfoByPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getInfoByPage(String searchWord,int pageNum,int pageSize) {
+    public ResponseEntity<?> getInfoByPage(String searchWord,String sortColumn,String sortMethod,int pageNum,int pageSize) {
         List<Map<String, Object>> results = new ArrayList<>();
-        results = vueDemoService.getInfoByPage(searchWord,pageNum,pageSize);
+        results = vueDemoService.getInfoByPage(searchWord,sortColumn,sortMethod,pageNum,pageSize);
         ResponseEntity<List<Map<String, String>>> responseEntity = new ResponseEntity(results,
                 HttpStatus.OK);
         return responseEntity;

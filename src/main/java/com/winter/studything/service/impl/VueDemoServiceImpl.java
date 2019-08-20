@@ -85,10 +85,17 @@ public class VueDemoServiceImpl implements VueDemoService {
     }
 
     @Override
-    public List<Map<String, Object>> getInfoByPage(String  searchWord,int pageNum,int pageSize){
+    public List<Map<String, Object>> getInfoByPage(String  searchWord,String sortColumn,String sortMethod,int pageNum,int pageSize){
         String sql = "select id,name,address,sex,date_format(create_datetime, '%Y-%m-%d %H:%i:%s') as date from persons ";
-        sql = sql + CommonUtils.makeSelectWhereSql(searchWord,"name","address") + " order by create_datetime desc limit "+(pageNum-1)*pageSize +","+pageSize;
-
+        if("".equals(sortMethod) || "undefined".equals(sortMethod)){ //无排序时，默认按照创建时间逆序排列
+            sortMethod = "desc";
+            sortColumn = "create_datetime";
+        }else if("descending".equals(sortMethod)){
+            sortMethod = "desc";
+        }else if("ascending".equals(sortMethod)){
+            sortMethod = "asc";
+        }
+        sql = sql + CommonUtils.makeSelectWhereSql(searchWord,"name","address") + " order by "+sortColumn+" "+sortMethod+" limit "+(pageNum-1)*pageSize +","+pageSize;
         return vueDemoDao.getInfoByPage(sql);
     }
 

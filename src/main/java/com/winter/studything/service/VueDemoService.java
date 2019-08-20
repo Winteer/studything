@@ -14,6 +14,6 @@ public interface VueDemoService {
     public Map<String, Object> getInfoByID(Persons person);
     public int updateForm(Persons person);
     public int getCount(String  searchWord);
-    public List<Map<String, Object>> getInfoByPage(String  searchWord,int pageNum,int pageSize);
+    public List<Map<String, Object>> getInfoByPage(String  searchWord,String sortColumn,String sortMethod,int pageNum,int pageSize);
 
 }

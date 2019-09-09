@@ -3,10 +3,16 @@ package com.winter.studything.service.impl;
 import com.winter.studything.Entity.Persons;
 import com.winter.studything.dao.VueDemoDao;
 import com.winter.studything.service.VueDemoService;
+import com.winter.studything.utils.Base64Utils;
 import com.winter.studything.utils.CommonUtils;
+import com.winter.studything.utils.FTPUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -98,5 +104,25 @@ public class VueDemoServiceImpl implements VueDemoService {
         sql = sql + CommonUtils.makeSelectWhereSql(searchWord,"name","address") + " order by "+sortColumn+" "+sortMethod+" limit "+(pageNum-1)*pageSize +","+pageSize;
         return vueDemoDao.getInfoByPage(sql);
     }
+
+    @Override
+    public Map<String,Object> tinyUploadFile(String path,String fileData,String name) {
+        Map<String,Object> retMap = new HashMap<>();
+        String url = "";
+        File file = Base64Utils.base64ToFile(fileData);
+        try {
+            InputStream in = new FileInputStream(file);
+            url = FTPUtils.uploadFile(path,name,in);
+            retMap.put("location",url);
+            System.out.println(retMap);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            file.delete();
+        }
+        return retMap;
+    }
+
+
 
 }

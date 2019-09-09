@@ -15,5 +15,6 @@ public interface VueDemoService {
     public int updateForm(Persons person);
     public int getCount(String  searchWord);
     public List<Map<String, Object>> getInfoByPage(String  searchWord,String sortColumn,String sortMethod,int pageNum,int pageSize);
+    public Map<String,Object> tinyUploadFile(String path,String fileData,String name);
 
 }

@@ -24,6 +24,8 @@ public class VueDemoController {
     @Autowired
     VueDemoService vueDemoService;
 
+    public  String path = "/tinymce/"; //编辑器上传图片存放路径
+
     @RequestMapping(value = "/persons/sex", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getSexAll() {
         ArrayList<Map<String, String>> results = new ArrayList<>();
@@ -111,5 +113,24 @@ public class VueDemoController {
                 HttpStatus.OK);
         return responseEntity;
     }
+
+    /**
+     * 富文本编辑器上传照片
+     * @param uploadFile
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/persons/tinyUploadFile", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> tinyUploadFile(String uploadFile,String name) {
+        Map<String, Object> results = new HashMap<>();
+        if(uploadFile != null && uploadFile != ""){
+            results = vueDemoService.tinyUploadFile(path,uploadFile,name);
+        }
+        ResponseEntity<List<Map<String, String>>> responseEntity = new ResponseEntity(results,
+                HttpStatus.OK);
+        return responseEntity;
+    }
+
+
 
 }

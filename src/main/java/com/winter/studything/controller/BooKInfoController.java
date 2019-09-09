@@ -18,7 +18,7 @@ import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:20007", maxAge = 3600)
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/tesdddt")
 public class BooKInfoController {
 
     @Autowired

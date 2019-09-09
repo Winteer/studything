@@ -2,6 +2,7 @@ package com.winter.studything.service.impl;
 
 import com.winter.studything.Entity.Persons;
 import com.winter.studything.dao.VueDemoDao;
+import com.winter.studything.service.BookInfoService;
 import com.winter.studything.service.VueDemoService;
 import com.winter.studything.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class BookInfoServiceImpl implements VueDemoService {
+public class BookInfoServiceImpl implements BookInfoService {
 
     @Autowired
     VueDemoDao vueDemoDao;

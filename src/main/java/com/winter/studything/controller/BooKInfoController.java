@@ -1,5 +1,6 @@
 package com.winter.studything.controller;
 
+import com.winter.studything.Entity.BookInfo;
 import com.winter.studything.Entity.Persons;
 import com.winter.studything.service.BookInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,8 +62,8 @@ public class BooKInfoController {
 
 
     @RequestMapping(value = "/insertBookInfo", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public int insertPerson(Persons person) {
-        int flag = booKInfoService.insertPerson(person);
+    public int insertBookInfo(BookInfo bookInfo) {
+        int flag = booKInfoService.insertBookInfo(bookInfo);
         if(flag >0){
             System.out.println("插入成功！");
         }

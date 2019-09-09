@@ -86,7 +86,7 @@ public class VueDemoServiceImpl implements VueDemoService {
     @Override
     public int getCount(String  searchWord){
         String sql = "";
-        sql = CommonUtils.makeCountSql("test.persons",searchWord,"name","address");
+        sql = CommonUtils.makeCountSql("persons",searchWord,"name","address");
         return vueDemoDao.getCount(sql);
     }
 

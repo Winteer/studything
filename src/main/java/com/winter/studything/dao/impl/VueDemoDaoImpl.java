@@ -43,7 +43,7 @@ public class VueDemoDaoImpl implements VueDemoDao {
     @Override
     public void deleteByID(int id) {
 
-        String sql = "delete  from test.persons where id =" + id;
+        String sql = "delete  from persons where id =" + id;
         jdbcTemplate.update(sql);
     }
 

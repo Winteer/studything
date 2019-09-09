@@ -44,12 +44,11 @@ public class SqlUtils {
                 //book_time,start_time,end_time
                 if("book_time".equals(key) || "start_time".equals(key) ||"end_time".equals(key)){
                     colSql = colSql + key + ",";
-                    valSql = valSql + "'" + tmpMap.get(key) + "',";
+                    valSql = valSql +"date_format('"+tmpMap.get(key)+"','%Y-%m-%d %H:%i:%s'),";
                 }else{
                     colSql = colSql + key + ",";
                     valSql = valSql + "'" + tmpMap.get(key) + "',";
                 }
-
             } else {
                 colSql = colSql + key;
                 valSql = valSql + "'" + tmpMap.get(key) + "'";

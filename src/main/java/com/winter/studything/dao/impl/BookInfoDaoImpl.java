@@ -4,7 +4,7 @@ import com.winter.studything.Entity.BookInfo;
 import com.winter.studything.Entity.Persons;
 import com.winter.studything.dao.BookInfoDao;
 import com.winter.studything.dao.VueDemoDao;
-import com.winter.studything.utils.CommonUtils;
+import com.winter.studything.utils.SqlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -32,7 +32,7 @@ public class BookInfoDaoImpl implements BookInfoDao {
     @Override
     public Map<String, Object> getCount() {
         Map<String, Object> retMap = new HashMap<>();
-        retMap = jdbcTemplate.queryForMap("select Count(*) as count from Persons p");
+        retMap = jdbcTemplate.queryForMap("select Count(*) as count from book_info b");
         return retMap;
     }
 
@@ -54,10 +54,10 @@ public class BookInfoDaoImpl implements BookInfoDao {
     public int insertBookInfo(BookInfo bookInfo) {
         Map<String, Object> map = new HashMap<>();
         int flag = -1;
-        map = CommonUtils.BeanToMap(bookInfo);
+        map = SqlUtils.BeanToMap(bookInfo);
         map.remove("id");
         if (map.size() > 0) {
-            String sql = CommonUtils.makeInsertSql(BookInfoTable, map, "id");
+            String sql = SqlUtils.makeInsertSql(BookInfoTable, map, "id");
             flag = jdbcTemplate.update(sql);
         }
         return flag;

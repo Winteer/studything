@@ -1,5 +1,6 @@
 package com.winter.studything.service;
 
+import com.winter.studything.Entity.BookInfo;
 import com.winter.studything.Entity.Persons;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface BookInfoService {
     public Map<String,Object> getCount();
     public List<Map<String,Object>> getAllInfo();
     public void deleteByID(int id);
-    public int insertPerson(Persons person);
+    public int insertBookInfo(BookInfo bookInfo);
     public Map<String, Object> getInfoByID(Persons person);
     public int updateForm(Persons person);
     public int getCount(String searchWord);

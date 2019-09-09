@@ -1,10 +1,10 @@
 package com.winter.studything.service.impl;
 
+import com.winter.studything.Entity.BookInfo;
 import com.winter.studything.Entity.Persons;
-import com.winter.studything.dao.VueDemoDao;
+import com.winter.studything.dao.BookInfoDao;
 import com.winter.studything.service.BookInfoService;
-import com.winter.studything.service.VueDemoService;
-import com.winter.studything.utils.CommonUtils;
+import com.winter.studything.utils.SqlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +17,17 @@ import java.util.Map;
 public class BookInfoServiceImpl implements BookInfoService {
 
     @Autowired
-    VueDemoDao vueDemoDao;
+    BookInfoDao BookInfoDao;
 
     @Override
     public List<String> finSex(){
-        List<String> retList = vueDemoDao.finSex();
+        List<String> retList = BookInfoDao.finSex();
         return retList;
     }
     @Override
     public Map<String,Object> getCount(){
         Map<String,Object> retMap = new HashMap<>();
-        retMap = vueDemoDao.getCount();
+        retMap = BookInfoDao.getCount();
         return retMap;
     }
 
@@ -35,17 +35,17 @@ public class BookInfoServiceImpl implements BookInfoService {
     @Override
     public List<Map<String,Object>> getAllInfo(){
         List<Map<String,Object>> retList = new ArrayList<>();
-        retList = vueDemoDao.getAllInfo();
+        retList = BookInfoDao.getAllInfo();
         return retList;
     }
 
     @Override
     public void deleteByID(int id){
-        vueDemoDao.deleteByID(id);
+        BookInfoDao.deleteByID(id);
     }
     @Override
-    public int insertPerson(Persons person){
-        int flag = vueDemoDao.insertPerson(person);
+    public int insertBookInfo(BookInfo bookInfo){
+        int flag = BookInfoDao.insertBookInfo(bookInfo);
         return flag;
     }
 
@@ -53,7 +53,7 @@ public class BookInfoServiceImpl implements BookInfoService {
     public Map<String, Object> getInfoByID(Persons person) {
         Map<String, Object> map = new HashMap<>();
         String sql = "select id,name,address,sex,date_format(create_datetime, '%Y-%m-%d %H:%i:%s') as date from persons where id =" + person.getId();
-        map = vueDemoDao.getInfoByID(sql);
+        map = BookInfoDao.getInfoByID(sql);
         return map;
     }
 
@@ -62,9 +62,9 @@ public class BookInfoServiceImpl implements BookInfoService {
         int flag = -1;
         String sql = "";
         Map<String,Object> beanMap = new HashMap<>();
-        beanMap = CommonUtils.BeanToMap(person);
-        sql = CommonUtils.makeUpdateSql("test.persons",beanMap,"id");
-        flag = vueDemoDao.updateForm(sql);
+        beanMap = SqlUtils.BeanToMap(person);
+        sql = SqlUtils.makeUpdateSql("test.persons",beanMap,"id");
+        flag = BookInfoDao.updateForm(sql);
         return flag;
     }
 //    @Override
@@ -72,17 +72,17 @@ public class BookInfoServiceImpl implements BookInfoService {
 //        Map<String, Object> map = new HashMap<>();
 //        String sql = "";
 //        Map<String,Object> beanMap = new HashMap<>();
-//        beanMap = CommonUtils.BeanToMap(person);
-//        sql = CommonUtils.makeUpdateSql("test.persons",beanMap,"id");
-//        map = vueDemoDao.getInfoByID(sql);
+//        beanMap = SqlUtils.BeanToMap(person);
+//        sql = SqlUtils.makeUpdateSql("test.persons",beanMap,"id");
+//        map = BookInfoDao.getInfoByID(sql);
 //        return map;
 //    }
 
     @Override
     public int getCount(String  searchWord){
         String sql = "";
-        sql = CommonUtils.makeCountSql("test.persons",searchWord,"name","address");
-        return vueDemoDao.getCount(sql);
+        sql = SqlUtils.makeCountSql("test.persons",searchWord,"name","address");
+        return BookInfoDao.getCount(sql);
     }
 
     @Override
@@ -96,8 +96,8 @@ public class BookInfoServiceImpl implements BookInfoService {
         }else if("ascending".equals(sortMethod)){
             sortMethod = "asc";
         }
-        sql = sql + CommonUtils.makeSelectWhereSql(searchWord,"name","address") + " order by "+sortColumn+" "+sortMethod+" limit "+(pageNum-1)*pageSize +","+pageSize;
-        return vueDemoDao.getInfoByPage(sql);
+        sql = sql + SqlUtils.makeSelectWhereSql(searchWord,"name","address") + " order by "+sortColumn+" "+sortMethod+" limit "+(pageNum-1)*pageSize +","+pageSize;
+        return BookInfoDao.getInfoByPage(sql);
     }
 
 }

@@ -11,7 +11,7 @@ public class SqlUtils {
         Map<String, Object> map = new HashMap<>();
         BeanMap beanMap = BeanMap.create(object);
         for (Object key : beanMap.keySet()) {
-            if (beanMap.get(key) != null && beanMap.get(key) != "") {
+            if (beanMap.get(key) != null && !"".equals(beanMap.get(key).toString())) {
                 map.put(key + "", beanMap.get(key));
             }
         }
@@ -74,18 +74,22 @@ public class SqlUtils {
         String whereSql = " WHERE " + primaryKey + "=" + tmpMap.get(primaryKey);
         tmpMap.remove(primaryKey);
         int size = tmpMap.size();
-        int flag = 1;
         /******************/
         //特殊字段处理位置
         /******************/
         for (Object key : tmpMap.keySet()) {
-            if (flag < size) {
-                colSql = colSql + key + "='" + tmpMap.get(key) + "',";
-            } else {
-                colSql = colSql + key + "='" + tmpMap.get(key) + "'";
-            }
-            flag++;
+                if("book_time".equals(key) || "start_time".equals(key) ||"end_time".equals(key)){
+                    if("null".equals(tmpMap.get(key).toString())){
+                        colSql = colSql + key + "= null,";
+                    }else{
+                        colSql = colSql + key + "= date_format('"+tmpMap.get(key)+"','%Y-%m-%d %H:%i:%s'),";
+                    }
+                }else{
+                    colSql = colSql + key + "='" + tmpMap.get(key) + "',";
+                }
         }
+        int flag = colSql.lastIndexOf(",");
+        colSql = colSql.substring(0,colSql.length()-1);
         sql = "UPDATE " + tableName + " SET " + colSql + " " + whereSql;
         return sql;
     }

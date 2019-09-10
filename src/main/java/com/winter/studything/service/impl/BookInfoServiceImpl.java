@@ -18,6 +18,7 @@ public class BookInfoServiceImpl implements BookInfoService {
 
     @Autowired
     BookInfoDao BookInfoDao;
+    private String BookInfo_TAB = "book_info"; //预定信息表表名
 
     @Override
     public List<String> finSex(){
@@ -50,21 +51,23 @@ public class BookInfoServiceImpl implements BookInfoService {
     }
 
     @Override
-    public Map<String, Object> getInfoByID(Persons person) {
+    public Map<String, Object> getInfoByID(BookInfo bookInfo) {
         Map<String, Object> map = new HashMap<>();
-        String sql = "select id,name,address,sex,date_format(create_datetime, '%Y-%m-%d %H:%i:%s') as date from persons where id =" + person.getId();
+        String sql = "select id,date_format(book_time, '%Y-%m-%d %H:%i:%s') as book_time ,phone,room,number,date_format(start_time, '%Y-%m-%d %H:%i:%s') as start_time,date_format(end_time, '%Y-%m-%d %H:%i:%s') as end_time,date_format(create_time, '%Y-%m-%d %H:%i:%s') as create_time from "+BookInfo_TAB+" where id =" + bookInfo.getId();
         map = BookInfoDao.getInfoByID(sql);
         return map;
     }
 
     @Override
-    public int updateForm(Persons person){
+    public int updateForm(BookInfo bookInfo){
         int flag = -1;
         String sql = "";
         Map<String,Object> beanMap = new HashMap<>();
-        beanMap = SqlUtils.BeanToMap(person);
-        sql = SqlUtils.makeUpdateSql("test.persons",beanMap,"id");
-        flag = BookInfoDao.updateForm(sql);
+        beanMap = SqlUtils.BeanToMap(bookInfo);
+        if(!beanMap.isEmpty()){
+            sql = SqlUtils.makeUpdateSql(BookInfo_TAB,beanMap,"id");
+            flag = BookInfoDao.updateForm(sql);
+        }
         return flag;
     }
 //    @Override
@@ -81,22 +84,22 @@ public class BookInfoServiceImpl implements BookInfoService {
     @Override
     public int getCount(String  searchWord){
         String sql = "";
-        sql = SqlUtils.makeCountSql("test.persons",searchWord,"name","address");
+        sql = SqlUtils.makeCountSql(BookInfo_TAB,searchWord,"name","address");
         return BookInfoDao.getCount(sql);
     }
 
     @Override
     public List<Map<String, Object>> getInfoByPage(String  searchWord,String sortColumn,String sortMethod,int pageNum,int pageSize){
-        String sql = "select id,name,address,sex,date_format(create_datetime, '%Y-%m-%d %H:%i:%s') as date from persons ";
+        String sql = "select id,date_format(book_time, '%Y-%m-%d %H:%i:%s') as book_time,phone,room,number,date_format(start_time, '%Y-%m-%d %H:%i:%s') as start_time,date_format(end_time, '%Y-%m-%d %H:%i:%s') as end_time,date_format(create_time, '%Y-%m-%d %H:%i:%s') as create_time from "+BookInfo_TAB+" ";
         if("".equals(sortMethod) || "undefined".equals(sortMethod)){ //无排序时，默认按照创建时间逆序排列
             sortMethod = "desc";
-            sortColumn = "create_datetime";
+            sortColumn = "create_time";
         }else if("descending".equals(sortMethod)){
             sortMethod = "desc";
         }else if("ascending".equals(sortMethod)){
             sortMethod = "asc";
         }
-        sql = sql + SqlUtils.makeSelectWhereSql(searchWord,"name","address") + " order by "+sortColumn+" "+sortMethod+" limit "+(pageNum-1)*pageSize +","+pageSize;
+        sql = sql + SqlUtils.makeSelectWhereSql(searchWord,"phone","room") + " order by "+sortColumn+" "+sortMethod+" limit "+(pageNum-1)*pageSize +","+pageSize;
         return BookInfoDao.getInfoByPage(sql);
     }
 

@@ -20,7 +20,9 @@ public class FTPUtils {
     private static int port = 2121;
 
     static{
-        initFtpClient(hostname,username,password,port);
+        if(ftpClient == null){
+            initFtpClient(hostname,username,password,port);
+        }
     }
 
     /**

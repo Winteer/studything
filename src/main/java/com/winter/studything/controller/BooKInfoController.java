@@ -72,9 +72,9 @@ public class BooKInfoController {
 
     //getInfoByID
     @RequestMapping(value = "/getInfoByID", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getInfoByID(Persons person) {
+    public ResponseEntity<?> getInfoByID(BookInfo bookInfo) {
         Map<String, Object> map = new HashMap<>();
-        map = booKInfoService.getInfoByID(person);
+        map = booKInfoService.getInfoByID(bookInfo);
         System.out.println(map);
         ResponseEntity<Map<String, String>> responseEntity = new ResponseEntity(map,
                 HttpStatus.OK);
@@ -82,9 +82,9 @@ public class BooKInfoController {
     }
 
     @RequestMapping(value = "/updateForm", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateForm(Persons person) {
+    public ResponseEntity<?> updateForm(BookInfo bookInfo) {
         int flag = -1;
-        flag = booKInfoService.updateForm(person);
+        flag = booKInfoService.updateForm(bookInfo);
         System.out.println(flag);
         ResponseEntity<Map<String, String>> responseEntity = new ResponseEntity(flag,
                 HttpStatus.OK);

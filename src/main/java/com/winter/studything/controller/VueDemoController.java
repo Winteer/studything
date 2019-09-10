@@ -2,6 +2,8 @@ package com.winter.studything.controller;
 
 import com.winter.studything.Entity.Persons;
 import com.winter.studything.service.VueDemoService;
+import com.winter.studything.utils.FTPUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,11 +12,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:20007", maxAge = 3600)
 @RestController
@@ -25,6 +26,7 @@ public class VueDemoController {
     VueDemoService vueDemoService;
 
     public  String path = "/tinymce/"; //编辑器上传图片存放路径
+    public  String BASE_PATH = "/UpLoad/"; //编辑器上传图片存放路径
 
     @RequestMapping(value = "/persons/sex", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getSexAll() {
@@ -130,6 +132,50 @@ public class VueDemoController {
                 HttpStatus.OK);
         return responseEntity;
     }
+
+
+    /**
+     * 文件上传
+     * @param files
+     * @return
+     */
+    @RequestMapping(value = "/persons/uploadFile", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> uploadFile(MultipartFile[] files) {
+        Map<String, Object> results = new HashMap<>();
+        results.put("state","上传成功！");
+        for (MultipartFile file : files) {
+
+            if (file.isEmpty()) {
+                results.put("state","文件为空！");
+            }else{
+                //获取文件名
+            String fileName = file.getOriginalFilename();
+//                String fileName = file.getName();
+                //获取文件后缀
+                String ext= null;
+                if(fileName.contains(".")){
+                    ext = fileName.substring(fileName.lastIndexOf("."));
+                }else{
+                    ext = "";
+                }
+                try {
+                    InputStream in = file.getInputStream();
+                    String url = FTPUtils.uploadFile(BASE_PATH,fileName,in);
+                    results.put(fileName,url);
+                    System.out.println(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    results.put("state",fileName+"上传失败！IO错误！");
+                }finally {
+                }
+            }
+            }
+        ResponseEntity<List<Map<String, String>>> responseEntity = new ResponseEntity(results,
+                HttpStatus.OK);
+        return responseEntity;
+    }
+
+
 
 
 

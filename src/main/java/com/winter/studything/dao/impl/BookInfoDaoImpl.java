@@ -46,7 +46,7 @@ public class BookInfoDaoImpl implements BookInfoDao {
     @Override
     public void deleteByID(int id) {
 
-        String sql = "delete  from test.persons where id =" + id;
+        String sql = "delete  from book_info where id =" + id;
         jdbcTemplate.update(sql);
     }
 

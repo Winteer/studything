@@ -22,12 +22,6 @@ public class BookInfoDaoImpl implements BookInfoDao {
 
     private String BookInfoTable = "book_info"; //预定表表名
 
-    @Override
-    public List<String> finSex() {
-        List<String> retList = new ArrayList<>();
-        retList = jdbcTemplate.queryForList("select DISTINCT sex from Persons p", String.class);
-        return retList;
-    }
 
     @Override
     public Map<String, Object> getCount() {
@@ -36,12 +30,6 @@ public class BookInfoDaoImpl implements BookInfoDao {
         return retMap;
     }
 
-    @Override
-    public List<Map<String, Object>> getAllInfo() {
-        List<Map<String, Object>> retList = new ArrayList<>();
-        retList = jdbcTemplate.queryForList("select id,name,address,date_format(create_datetime, '%Y-%m-%d %H:%i:%s') as date from test.persons");
-        return retList;
-    }
 
     @Override
     public void deleteByID(int id) {

@@ -94,31 +94,50 @@ public class SqlUtils {
         return sql;
     }
 
-    public static String makeCountSql(String tableName, String searchWord, String... searchCol) {
+    public static String makeCountSql(String tableName, String searchWord,String date, String... searchCol) {
         String sql = "";
         String whereSql = "";
+        String dateSql = "book_time >=" +  "str_to_date('"+date+" 00:00:00'"+", '%Y-%m-%d %H:%i:%s')" + " and book_time <= " + "str_to_date('"+date+" 23:59:59'"+", '%Y-%m-%d %H:%i:%s')";
         if (searchWord != null && searchWord != "" && searchCol.length > 0) {
             whereSql = " flag";
             for (String col : searchCol) {
                 whereSql = whereSql + " or " + col + " like '%"+searchWord+"%' ";
             }
             whereSql= whereSql.replace(" flag or","");
-            whereSql = " where "+whereSql;
+            whereSql = " where ("+whereSql+") ";
+        }
+        if(searchWord != null && searchWord != "" && searchCol.length > 0 && !"null".equals(date)){
+            whereSql = whereSql + " and "+dateSql;
+        }else if((searchWord == null || searchWord == "") && !"null".equals(date)){
+            whereSql = whereSql + " where  "+dateSql;
         }
         sql = "select count(*) as count from " + tableName + whereSql;
         return sql;
     }
 
 
-    public static String makeSelectWhereSql(String searchWord, String... searchCol) {
+    /**
+     * 制作select语句的where部分
+     * @param searchWord 查找内容
+     * @param date 日期时间字段 --预约时间book_time
+     * @param searchCol
+     * @return
+     */
+    public static String makeSelectWhereSql(String searchWord, String date,String... searchCol) {
         String whereSql = "";
-        if (searchWord != null && searchWord != "" && searchCol.length > 0) {
+        String dateSql = "book_time >=" +  "str_to_date('"+date+" 00:00:00'"+", '%Y-%m-%d %H:%i:%s')" + " and book_time <= " + "str_to_date('"+date+" 23:59:59'"+", '%Y-%m-%d %H:%i:%s')";
+        if (searchWord != null && searchWord != "" && searchCol.length > 0 ) {
             whereSql = " flag";
             for (String col : searchCol) {
                 whereSql = whereSql + " or " + col + " like '%"+searchWord+"%' ";
             }
             whereSql= whereSql.replace(" flag or","");
-            whereSql = " where "+whereSql;
+            whereSql = " where ("+whereSql+") ";
+        }
+        if(searchWord != null && searchWord != "" && searchCol.length > 0 && !"null".equals(date)){
+            whereSql = whereSql + " and "+dateSql;
+        }else if((searchWord == null || searchWord == "") && !"null".equals(date)){
+            whereSql = whereSql + " where  "+dateSql;
         }
         return whereSql;
     }

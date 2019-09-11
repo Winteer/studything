@@ -26,29 +26,19 @@ public class BooKInfoController {
     BookInfoService booKInfoService;
 
 
-    @RequestMapping(value = "/getAllInfo", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllInfo() {
-        List<Map<String, Object>> results = new ArrayList<>();
-        results = booKInfoService.getAllInfo();
-        System.out.println(results);
-        ResponseEntity<List<Map<String, String>>> responseEntity = new ResponseEntity(results,
-                HttpStatus.OK);
-        return responseEntity;
-    }
-
     @RequestMapping(value = "/getInfoByPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getInfoByPage(String searchWord,String sortColumn,String sortMethod,int pageNum,int pageSize) {
+    public ResponseEntity<?> getInfoByPage(String searchWord,String current_date,String sortColumn,String sortMethod,int pageNum,int pageSize) {
         List<Map<String, Object>> results = new ArrayList<>();
-        results = booKInfoService.getInfoByPage(searchWord,sortColumn,sortMethod,pageNum,pageSize);
+        results = booKInfoService.getInfoByPage(searchWord,current_date,sortColumn,sortMethod,pageNum,pageSize);
         ResponseEntity<List<Map<String, String>>> responseEntity = new ResponseEntity(results,
                 HttpStatus.OK);
         return responseEntity;
     }
 
     @RequestMapping(value = "/getCount", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getCount(String  searchWord) {
+    public ResponseEntity<?> getCount(String  searchWord,String current_date) {
         int count = 0;
-        count = booKInfoService.getCount(searchWord);
+        count = booKInfoService.getCount(searchWord,current_date);
         ResponseEntity<List<Map<String, String>>> responseEntity = new ResponseEntity(count,
                 HttpStatus.OK);
         return responseEntity;

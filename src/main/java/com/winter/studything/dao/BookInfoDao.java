@@ -7,10 +7,7 @@ import java.util.Map;
 
 public interface BookInfoDao {
 
-    public List<String> finSex();
-
     public Map<String,Object> getCount();
-    public List<Map<String,Object>> getAllInfo();
     public void deleteByID(int id);
     public int insertBookInfo(BookInfo bookInfo);
     public Map<String, Object> getInfoByID(String sql);

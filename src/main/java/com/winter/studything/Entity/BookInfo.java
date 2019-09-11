@@ -14,6 +14,8 @@ public class BookInfo {
     private String phone;   //预约手机号码
     private String room;    //预定主题
     private String number;  //预约人数
+    private String pay_mode; //支付方式
+    private String income;  //实际收入
     private String start_time;  //游戏开始时间
     private String end_time;    //游戏结束时间
     private String create_time; //记录创建时间
@@ -56,6 +58,22 @@ public class BookInfo {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getPay_mode() {
+        return pay_mode;
+    }
+
+    public void setPay_mode(String pay_mode) {
+        this.pay_mode = pay_mode;
+    }
+
+    public String getIncome() {
+        return income;
+    }
+
+    public void setIncome(String income) {
+        this.income = income;
     }
 
     public String getStart_time() {

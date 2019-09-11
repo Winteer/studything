@@ -18,12 +18,12 @@ public class FTPUtils {
     private static String username = "winter";
     private static String password = "123456";
     private static int port = 2121;
-
-    static{
-        if(ftpClient == null){
-            initFtpClient(hostname,username,password,port);
-        }
-    }
+//
+//    static{
+//        if(ftpClient == null || !ftpClient.isConnected() ){
+//            initFtpClient(hostname,username,password,port);
+//        }
+//    }
 
     /**
      * 初始化ftp服务器
@@ -56,6 +56,7 @@ public class FTPUtils {
      * @return
      */
     public static String uploadFile(String pathname, String fileName,InputStream inputStream){
+        FTPUtils.initFtpClient(hostname,username,password,port);
         boolean flag = false;
         String path = "http://192.168.1.36/image";
         try{

@@ -25,7 +25,6 @@ public class BooKInfoController {
     @Autowired
     BookInfoService booKInfoService;
 
-
     @RequestMapping(value = "/getInfoByPage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getInfoByPage(String searchWord,String current_date,String sortColumn,String sortMethod,int pageNum,int pageSize) {
         List<Map<String, Object>> results = new ArrayList<>();
@@ -80,7 +79,4 @@ public class BooKInfoController {
                 HttpStatus.OK);
         return responseEntity;
     }
-
-
-
 }

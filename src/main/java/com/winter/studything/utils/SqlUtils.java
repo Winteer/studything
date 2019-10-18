@@ -11,7 +11,7 @@ public class SqlUtils {
         Map<String, Object> map = new HashMap<>();
         BeanMap beanMap = BeanMap.create(object);
         for (Object key : beanMap.keySet()) {
-            if (beanMap.get(key) != null && !"".equals(beanMap.get(key).toString())) {
+            if (beanMap.get(key) != null ) {
                 map.put(key + "", beanMap.get(key));
             }
         }
@@ -71,7 +71,7 @@ public class SqlUtils {
     public static String makeUpdateSql(String tableName, Map<String, Object> tmpMap, String primaryKey) {
         String sql = "";
         String colSql = "";
-        String whereSql = " WHERE " + primaryKey + "=" + tmpMap.get(primaryKey);
+        String whereSql = " WHERE " + primaryKey + "='" + tmpMap.get(primaryKey)+"'";
         tmpMap.remove(primaryKey);
         int size = tmpMap.size();
         /******************/
@@ -85,7 +85,11 @@ public class SqlUtils {
                         colSql = colSql + key + "= date_format('"+tmpMap.get(key)+"','%Y-%m-%d %H:%i:%s'),";
                     }
                 }else{
-                    colSql = colSql + key + "='" + tmpMap.get(key) + "',";
+                    if("null".equals(tmpMap.get(key).toString())){
+                        colSql = colSql + key + "= null,";
+                    }else{
+                        colSql = colSql + key + "='" + tmpMap.get(key) + "',";
+                    }
                 }
         }
         int flag = colSql.lastIndexOf(",");

@@ -7,9 +7,6 @@ import org.springframework.cglib.beans.BeanMap;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 一些基本方法
- */
 public class CommonUtils {
 
     public static Map<String, Object> BeanToMap(Object object) {

@@ -1,10 +1,10 @@
 package com.winter.studything.service.impl;
 
 import com.winter.studything.service.TTBChartService;
+import com.winter.studything.utils.CommonUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -22,18 +22,15 @@ public class TTBChartServiceImpl implements TTBChartService {
     public List<Map<String, Object>> getStatisticByRange(int dateRange) {
         List<Map<String, Object>> retList = new ArrayList<>();
         List<String> xAxisData = new ArrayList<>();
-        if (dateRange == 7) {//近一周
-            xAxisData = new ArrayList<>(Arrays.asList("周一", "周二", "周三", "周四", "周五", "周六", "周日"));
-
-        } else if (dateRange == 15) {//近半个月
-
-        } else if (dateRange == 6) {//近六个月
-
-        } else if (dateRange == 1) {//近一年
-
+        String sql = "";
+        if (dateRange == -6 ||  dateRange == -14  ) {//近一周或近半个月
+            xAxisData = new ArrayList<>();
+            xAxisData = CommonUtils.getBeforeDate(null,dateRange);
+            sql = "select a.* from (select date_format(book_time, '%Y-%m-%d') as book_time,room,sum(income) as income from test.book_info group by book_time,room) a where a.book_time > DATE_SUB(date_format(curdate(), '%Y-%m-%d'),INTERVAL "+dateRange+" DAY) group by a.book_time,a.room order by a.book_time asc";
+        } else if (dateRange == -5 || dateRange == -11) {//近六个月或近一年
+            xAxisData = new ArrayList<>();
+            xAxisData = CommonUtils.getBeforeDate(null,dateRange);
         }
-
-
         return retList;
     }
 }

@@ -1,11 +1,9 @@
 package com.winter.studything.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.cglib.beans.BeanMap;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class CommonUtils {
 
@@ -113,6 +111,54 @@ public class CommonUtils {
             whereSql = " where "+whereSql;
         }
         return whereSql;
+    }
+
+
+    /**
+     * 获取当前时间往前往后n的日期
+     * eg: date ==null 默认是系统当前时间  否则以date为时间起点
+     * n > 0 往后
+     * n = 0 当前时间
+     * n < 0 往前
+     * @author zhangheng5@lenovo.com
+     * @param date
+     * @param n
+     * @return
+     */
+    public static List<String> getBeforeDate(Date date, int n){
+        List<String> list = new ArrayList<>();
+        Calendar c = Calendar.getInstance();
+        Date today = new Date();
+        if(null != date){
+            today = date;
+        }
+        c.setTime(today);
+        if(n > 0){
+            for(int i=0;i<=n;i++){
+                c.add(Calendar.DATE, i);
+                list.add(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                c.setTime(today);
+            }
+        }else if (n < 0){
+            for(int i=n;i<=0;i++){
+                c.add(Calendar.DATE, i);
+                list.add(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+                c.setTime(today);
+            }
+        }else{
+            c.add(Calendar.DATE, 0);
+            list.add(new SimpleDateFormat("yyyy-MM-dd").format(c.getTime()));
+            c.setTime(today);
+        }
+
+        return list;
+    }
+
+    public static void main(String[] args) {
+        Date d = new Date();
+        List<String> dateList = new ArrayList<>();
+        dateList = getBeforeDate(null,-1);
+        System.out.println(dateList);
     }
 
 }

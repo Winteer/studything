@@ -34,5 +34,4 @@ public class TTBChartController {
         return responseEntity;
     }
 
-
 }

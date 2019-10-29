@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class TTBChartController {
 
     @RequestMapping(value = "/getStatisticByRange", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getStatisticByRange(int dateRange) {
-        List<Map<String, Object>> results = new ArrayList<>();
+        Map<String, Object> results = new HashMap<>();
         results = ttbChartService.getStatisticByRange(dateRange);
         ResponseEntity<List<Map<String, String>>> responseEntity = new ResponseEntity(results,
                 HttpStatus.OK);

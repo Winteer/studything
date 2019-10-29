@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface TTBChartService {
 
-    public List<Map<String,Object>> getStatisticByRange(int dateRange);
+    public Map<String,Object> getStatisticByRange(int dateRange);
 }

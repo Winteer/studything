@@ -154,10 +154,39 @@ public class CommonUtils {
         return list;
     }
 
+    public static List<String> getMonthBeforeDate(Date date, int n){
+        List<String> list = new ArrayList<>();
+        Calendar c = Calendar.getInstance();
+        Date today = new Date();
+        if(null != date){
+            today = date;
+        }
+        c.setTime(today);
+        if(n > 0){
+            for(int i=0;i<=n;i++){
+                c.add(Calendar.MONTH, i);
+                list.add(new SimpleDateFormat("yyyy-MM").format(c.getTime()));
+                c.setTime(today);
+            }
+        }else if (n < 0){
+            for(int i=n;i<=0;i++){
+                c.add(Calendar.MONTH, i);
+                list.add(new SimpleDateFormat("yyyy-MM").format(c.getTime()));
+                c.setTime(today);
+            }
+        }else{
+            c.add(Calendar.MONTH, 0);
+            list.add(new SimpleDateFormat("yyyy-MM").format(c.getTime()));
+            c.setTime(today);
+        }
+        return list;
+    }
+
+
     public static void main(String[] args) {
         Date d = new Date();
         List<String> dateList = new ArrayList<>();
-        dateList = getBeforeDate(null,-1);
+        dateList = getMonthBeforeDate(null,-1);
         System.out.println(dateList);
     }
 

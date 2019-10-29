@@ -14,4 +14,5 @@ public interface BookInfoDao {
     public int updateForm(String sql);
     public int getCount(String sql);
     public List<Map<String, Object>> getInfoByPage(String sql);
+    public List<Map<String,Object>> roomStatistic(String sql);
 }

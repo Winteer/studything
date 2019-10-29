@@ -19,6 +19,8 @@ public class BookInfoServiceImpl implements BookInfoService {
     @Autowired
     BookInfoDao BookInfoDao;
     private String BookInfo_TAB = "book_info"; //预定信息表表名
+    private  String[] roomNames ={"玉观音","大宋奇案","鬼娃学校"};
+    private  String[] payWays ={"微信","支付宝","现金","美团","云闪付"};
 
     @Override
     public Map<String,Object> getCount(){
@@ -79,6 +81,47 @@ public class BookInfoServiceImpl implements BookInfoService {
         }
         sql = sql + SqlUtils.makeSelectWhereSql(searchWord,current_date,"phone","room","pay_mode") + " order by "+sortColumn+" "+sortMethod+" limit "+(pageNum-1)*pageSize +","+pageSize;
         return BookInfoDao.getInfoByPage(sql);
+    }
+
+    /******************************************/
+    //统计报表
+    /******************************************/
+
+    /**
+     *
+     * @param statisticType 统计维度；按照主题收益或者收款方式统计
+     * @param timeType 时间维度：按照最近七天，最近三十天，最近三个月，最近6个月，最近12个月
+     * @return
+     */
+    @Override
+    public List<Map<String,Object>> roomStatistic(String statisticType,String timeType){
+        List<Map<String,Object>> list = new ArrayList();
+        String sql = "";
+        String days = "";
+        if(timeType != "all" && timeType!=""){
+            if("seven".equals(timeType)){
+                days = "7";
+            }else if("thirty".equals(timeType)){
+                days = "30";
+            }
+            sql = "select book.room,book.book_time,sum(book.income) from " +
+                    "(select room,date_format(book_time,'%Y-%m-%d') as book_time,income from "+BookInfo_TAB+" where date_sub(curdate(), INTERVAL "+days+" DAY) <= date(`book_time`)) book " +
+                    "GROUP BY book.room,book.book_time order by book.book_time asc";
+        }else if(!"".equals(timeType) && "all".equals(timeType)){
+            sql = "select book.room,book.book_time,sum(book.income) from " +
+                    "(select room,date_format(book_time,'%Y-%m-%d') as book_time,income from "+BookInfo_TAB+") book " +
+                    "GROUP BY book.room,book.book_time order by book.book_time asc";
+        }
+        list = BookInfoDao.roomStatistic(sql);
+        if(list.size() > 0){
+            for(String room : roomNames ){
+                for(Map<String,Object> tmpMap : list){
+
+                }
+            }
+
+        }
+        return list;
     }
 
 }

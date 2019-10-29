@@ -14,5 +14,5 @@ public interface BookInfoService {
     public int updateForm(BookInfo bookInfo);
     public int getCount(String searchWord,String date);
     public List<Map<String, Object>> getInfoByPage(String searchWord,String current_date, String sortColumn, String sortMethod, int pageNum, int pageSize);
-
+    public List<Map<String,Object>> roomStatistic(String statisticType,String timeType);
 }

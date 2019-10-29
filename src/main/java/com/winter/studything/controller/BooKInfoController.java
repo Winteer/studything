@@ -80,6 +80,18 @@ public class BooKInfoController {
         return responseEntity;
     }
 
+    /******************************************/
+    //统计报表
+    /******************************************/
+    @RequestMapping(value = "/roomStatistic", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> roomStatistic(String type) {
+        int flag = -1;
+        ResponseEntity<Map<String, String>> responseEntity = new ResponseEntity(flag,
+                HttpStatus.OK);
+        return responseEntity;
+    }
+
+
 
 
 }

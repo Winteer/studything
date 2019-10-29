@@ -20,7 +20,7 @@ public class BookInfoDaoImpl implements BookInfoDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private String BookInfoTable = "book_info"; //预定表表名
+    private String BookInfo_TAB = "book_info"; //预定表表名
 
 
     @Override
@@ -34,7 +34,7 @@ public class BookInfoDaoImpl implements BookInfoDao {
     @Override
     public void deleteByID(int id) {
 
-        String sql = "delete  from book_info where id =" + id;
+        String sql = "delete  from "+BookInfo_TAB+" where id =" + id;
         jdbcTemplate.update(sql);
     }
 
@@ -45,7 +45,7 @@ public class BookInfoDaoImpl implements BookInfoDao {
         map = SqlUtils.BeanToMap(bookInfo);
         map.remove("id");
         if (map.size() > 0) {
-            String sql = SqlUtils.makeInsertSql(BookInfoTable, map, "id");
+            String sql = SqlUtils.makeInsertSql(BookInfo_TAB, map, "id");
             flag = jdbcTemplate.update(sql);
         }
         return flag;
@@ -80,5 +80,12 @@ public class BookInfoDaoImpl implements BookInfoDao {
         Map<String,Object> map = new HashMap<>();
         retList = jdbcTemplate.queryForList(sql);
         return retList;
+    }
+
+    @Override
+    public List<Map<String,Object>> roomStatistic(String sql){
+        List<Map<String,Object>> list = new ArrayList();
+        list = jdbcTemplate.queryForList(sql);
+        return list;
     }
 }

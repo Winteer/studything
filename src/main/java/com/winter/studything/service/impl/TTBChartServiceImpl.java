@@ -97,7 +97,7 @@ public class TTBChartServiceImpl implements TTBChartService {
         sumMap.put("yAxisIndex",1);
         sumMap.put("data",sumData.toArray());
 
-        retList.add(sumMap);
+//        retList.add(sumMap);
         sumMap.remove("yAxisIndex");
         sumList.add(sumMap);
         retMap.put("xdata",xAxisData);

@@ -93,5 +93,16 @@ public class BooKInfoController {
 
 
 
+    @RequestMapping(value = "/getInfoByCondi", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getInfoByCondi(String timeType,String conType,String timeStr) {
+        List<Map<String, Object>> results = new ArrayList<>();
+        results = booKInfoService.getInfoByCondi(timeType,conType,timeStr);
+        ResponseEntity<List<Map<String, String>>> responseEntity = new ResponseEntity(results,
+                HttpStatus.OK);
+        return responseEntity;
+    }
+
+
+
 
 }

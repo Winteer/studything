@@ -87,7 +87,7 @@ public class CommonUtils {
     public static String makeCountSql(String tableName, String searchWord, String... searchCol) {
         String sql = "";
         String whereSql = "";
-        if (searchWord != null && searchWord != "" && searchCol.length > 0) {
+        if (searchWord != null && searchWord != "" && !"".equals(searchCol) && searchCol != null && searchCol.length > 0) {
             whereSql = " flag";
             for (String col : searchCol) {
                 whereSql = whereSql + " or " + col + " like '%"+searchWord+"%' ";

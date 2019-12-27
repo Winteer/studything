@@ -1,7 +1,6 @@
 package com.winter.studything.service;
 
 import com.winter.studything.Entity.BookInfo;
-import com.winter.studything.Entity.Persons;
 
 import java.util.List;
 import java.util.Map;
@@ -15,4 +14,5 @@ public interface BookInfoService {
     public int getCount(String searchWord,String date);
     public List<Map<String, Object>> getInfoByPage(String searchWord,String current_date, String sortColumn, String sortMethod, int pageNum, int pageSize);
     public List<Map<String,Object>> roomStatistic(String statisticType,String timeType);
+    public List<Map<String, Object>> getInfoByCondi(String timeType,String conType,String timeStr);
 }

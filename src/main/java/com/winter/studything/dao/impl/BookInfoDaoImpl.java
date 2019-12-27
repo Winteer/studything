@@ -1,9 +1,7 @@
 package com.winter.studything.dao.impl;
 
 import com.winter.studything.Entity.BookInfo;
-import com.winter.studything.Entity.Persons;
 import com.winter.studything.dao.BookInfoDao;
-import com.winter.studything.dao.VueDemoDao;
 import com.winter.studything.utils.SqlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -76,6 +74,14 @@ public class BookInfoDaoImpl implements BookInfoDao {
 
     @Override
     public List<Map<String, Object>> getInfoByPage(String sql){
+        List<Map<String, Object>> retList = new ArrayList<>();
+        Map<String,Object> map = new HashMap<>();
+        retList = jdbcTemplate.queryForList(sql);
+        return retList;
+    }
+
+    @Override
+    public List<Map<String, Object>> getListInfo(String sql){
         List<Map<String, Object>> retList = new ArrayList<>();
         Map<String,Object> map = new HashMap<>();
         retList = jdbcTemplate.queryForList(sql);

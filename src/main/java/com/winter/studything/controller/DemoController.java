@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,4 +68,29 @@ public class DemoController {
         retMap = demoService.getUserCount();
         return retMap;
     }
+//
+//    @RequestMapping(value="/gongshang", method= RequestMethod.POST)
+//    @ResponseBody
+//    public String gongshang() {
+//        String ret= "";
+//        try {
+//            String endpoint = "http://172.28.128.138:8081/ssxt_nx/services/CompanyBaseInfoSupport";
+//            //创建一个服务（service）调用（call）
+//            Service service = new Service();
+//            Call call = (Call) service.createCall();
+//            //设置service所在的url
+//            call.setTargetEndpointAddress(new java.net.URL(endpoint));
+//            call.setOperation("getCompanyBaseInfoByCard");
+//            String[] str = {"642102197809230013"};
+//            call.invoke(new Object[]{str, "8317c797-c6ae-414d-ab65-81c6a3c35a6f"});
+//            ret = (String) call.invoke(new Object[]{str, "8317c797-c6ae-414d-ab65-81c6a3c35a6f"});
+//            System.out.println("******************************");
+//            System.out.println(ret);
+//            System.out.println("******************************");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return ret;
+//    }
+
 }

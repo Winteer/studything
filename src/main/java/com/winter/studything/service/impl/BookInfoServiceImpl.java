@@ -1,7 +1,6 @@
 package com.winter.studything.service.impl;
 
 import com.winter.studything.Entity.BookInfo;
-import com.winter.studything.Entity.Persons;
 import com.winter.studything.dao.BookInfoDao;
 import com.winter.studything.service.BookInfoService;
 import com.winter.studything.utils.SqlUtils;
@@ -82,6 +81,22 @@ public class BookInfoServiceImpl implements BookInfoService {
         sql = sql + SqlUtils.makeSelectWhereSql(searchWord,current_date,"phone","room","pay_mode") + " order by "+sortColumn+" "+sortMethod+" limit "+(pageNum-1)*pageSize +","+pageSize;
         return BookInfoDao.getInfoByPage(sql);
     }
+    @Override
+    public List<Map<String, Object>> getInfoByCondi(String timeType,String conType,String timeStr){
+        String sql = "select id,date_format(book_time, '%Y-%m-%d %H:%i:%s') as book_time,phone,room,number,pay_mode,income,date_format(start_time, '%Y-%m-%d %H:%i:%s') as start_time,date_format(end_time, '%Y-%m-%d %H:%i:%s') as end_time,date_format(create_time, '%Y-%m-%d %H:%i:%s') as create_time from "+BookInfo_TAB+" ";
+        String sqlPattern="";
+        if("m".equals(timeType)){
+            sqlPattern = "%Y-%m";
+
+        }else if("y".equals(timeType)){
+            sqlPattern = "%Y";
+        }
+        sql = sql + " where date_format(book_time, '"+sqlPattern+"') = '" +timeStr+"' and room = '"+conType+"'";
+        System.out.println(sql);
+        return BookInfoDao.getListInfo(sql);
+    }
+
+
 
     /******************************************/
     //统计报表

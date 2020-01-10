@@ -45,7 +45,7 @@ public class TTBChartServiceImpl implements TTBChartService {
             }else{
                 dateRange = dateRange + 29;
             }
-            sql = "select a.* from (select date_format(book_time, '%Y-%m-%d') as book_time,room,sum(income) as income from book_info group by book_time,room) a where a.book_time > DATE_SUB(date_format(curdate(), '%Y-%m-%d'),INTERVAL "+dateRange+" DAY) group by a.book_time,a.room order by a.book_time asc";
+            sql = "select a.* from (select date_format(book_time, '%Y-%m-%d') as book_time,room,sum(income) as income from book_info group by date_format(book_time, '%Y-%m-%d'),room) a where a.book_time > DATE_SUB(date_format(curdate(), '%Y-%m-%d'),INTERVAL "+dateRange+" DAY) group by a.book_time,a.room order by a.book_time asc";
             tmpList = commonDao.getInfoList(sql);
         } else if (dateRange == -5 || dateRange == -11) {//近六个月或近一年
             xAxisData = CommonUtils.getMonthBeforeDate(null,dateRange);
@@ -54,7 +54,7 @@ public class TTBChartServiceImpl implements TTBChartService {
             }else{
                 dateRange = dateRange + 23;
             }
-            sql = "SELECT b.book_time,b.room,sum(b.income) AS income FROM(SELECT date_format(book_time, '%Y-%m') AS book_time,room,sum(income) AS income FROM book_info WHERE book_time > date_format(date_sub(curdate(), INTERVAL "+dateRange+" MONTH),'%Y-%m') GROUP BY book_time,room) b GROUP BY b.book_time,b.room ORDER BY b.book_time ASC";
+            sql = "SELECT b.book_time,b.room,sum(b.income) AS income FROM(SELECT date_format(book_time, '%Y-%m') AS book_time,room,sum(income) AS income FROM book_info WHERE book_time > date_format(date_sub(curdate(), INTERVAL "+dateRange+" MONTH),'%Y-%m') GROUP BY date_format(book_time, '%Y-%m'),room) b GROUP BY b.book_time,b.room ORDER BY b.book_time ASC";
             tmpList = commonDao.getInfoList(sql);
         }
         /*************************************/

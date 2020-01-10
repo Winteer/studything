@@ -87,7 +87,6 @@ public class BookInfoServiceImpl implements BookInfoService {
         String sqlPattern="";
         if("m".equals(timeType)){
             sqlPattern = "%Y-%m";
-
         }else if("y".equals(timeType)){
             sqlPattern = "%Y";
         }
@@ -95,7 +94,6 @@ public class BookInfoServiceImpl implements BookInfoService {
         System.out.println(sql);
         return BookInfoDao.getListInfo(sql);
     }
-
 
 
     /******************************************/
@@ -134,9 +132,7 @@ public class BookInfoServiceImpl implements BookInfoService {
 
                 }
             }
-
         }
         return list;
     }
-
 }
